@@ -42,11 +42,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("wasTapped", false);
-		for (String key : remoteMessage.getData().keySet()) {
-                Object value = remoteMessage.getData().get(key);
-                Log.d(TAG, "\tKey: " + key + " Value: " + value);
-				data.put(key, value);
-        }
+		//for (String key : remoteMessage.getData().keySet()) {
+//                 Object value = remoteMessage.getData().get("Title");
+//                 Log.d(TAG, "\tKey: " + key + " Value: " + value);
+				data.put("Title", remoteMessage.getNotification().getTitle());
+	    			data.put("Body",remoteMessage.getNotification().getBody());
+        	//}
 		
 		Log.d(TAG, "\tNotification Data: " + data.toString());
         FCMPlugin.sendPushPayload( data );
