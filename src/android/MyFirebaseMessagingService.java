@@ -63,6 +63,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String title, String messageBody, Map<String, Object> data) {
         Intent intent = new Intent(this, FCMPluginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	    intent.putExtra("Title",title);
+	    intent.putExtra("Body",messageBody);
 		for (String key : data.keySet()) {
 			intent.putExtra(key, data.get(key).toString());
 		}
