@@ -1,0 +1,36 @@
+{
+  "version": "1.1.4",
+  "name": "cordova-plugin-fcm-plus",
+  "cordova_name": "Cordova FCM Push and Analytics Plugin",
+  "description": "Google Firebase Cloud Messaging and Analytics Cordova Plugin",
+  "license": "MIT",
+  "repo": "",
+  "issue": "",
+  "author": {
+    "name": "Guy Rombaut"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guyromb/cordova-plugin-fcm-plus"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "analytics",
+    "cordova-ios",
+    "notifications",
+    "push",
+    "firebase",
+    "fcm",
+    "ios",
+    "android",
+    "ionic",
+    "cordova"
+  ],
+  "platforms": [
+    "android",
+    "ios"
+  ],
+  "engines": [],
+  "englishdoc": ""
+}

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "243104259782",
+    "firebase_url": "https://wacpush.firebaseio.com",
+    "project_id": "wacpush",
+    "storage_bucket": "wacpush.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243104259782:android:4c14830d17ecb349",
+        "android_client_info": {
+          "package_name": "com.ayurworld.wac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243104259782-502ps1dl26rbcu7rm5e39ukn5sg6dopp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoEtZ69mkZdSUNE1rLEK1PKM0FtMpEKq8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
