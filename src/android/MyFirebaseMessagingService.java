@@ -65,6 +65,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	    intent.putExtra("Title",title);
 	    intent.putExtra("Body",messageBody);
+	    Log.e(TAG,"Rahul Title is -> " + intent.getExtras().getString("Title"));
+	    Log.e(TAG,"Rahul Body is -> " + intent.getExtras().getString("Body"));
 		for (String key : data.keySet()) {
 			intent.putExtra(key, data.get(key).toString());
 		}
