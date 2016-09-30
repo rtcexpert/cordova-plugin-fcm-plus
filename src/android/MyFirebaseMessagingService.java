@@ -18,6 +18,9 @@ import android.graphics.BitmapFactory;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 /**
  * Created by Felipe Echanique on 08/06/2016.
  */
@@ -56,7 +59,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		Log.d(TAG, "\tNotification Data: " + data.toString());
         FCMPlugin.sendPushPayload( data );
 	    final RemoteMessage.Notification remoteMessageNotification = remoteMessage.getNotification();
-        sendNotification(remoteMessageNotification);
+	    String imageUri = remoteMessage.getData().get("image");
+        sendNotification(remoteMessageNotification,imageUri);
         //sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getData());
     }
     // [END receive_message]
@@ -94,14 +98,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(0 , notificationBuilder.build());
     }*/
 	
-	private void sendNotification(RemoteMessage.Notification notification) {
+	private void sendNotification(RemoteMessage.Notification notification,Sting img) {
 
         Intent intent = new Intent(this, FCMPluginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 		
-		String imageUri = notification.getData().get("image");
+		String imageUri = img;
 
         //To get a Bitmap image from the URL received
         bitmap = getBitmapfromUrl(imageUri);
@@ -113,6 +117,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentTitle(notification.getTitle())
                 .setContentText(notification.getBody())
                 .setAutoCancel(true)
+		.setStyle(new NotificationCompat.BigPictureStyle()
+                        .bigPicture(bitmap))/*Notification with Image*/
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
@@ -120,5 +126,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0, notificationBuilder.build());
+    }
+	
+	public Bitmap getBitmapfromUrl(String imageUrl) {
+        try {
+            URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(input);
+            return bitmap;
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+
+        }
     }
 }
