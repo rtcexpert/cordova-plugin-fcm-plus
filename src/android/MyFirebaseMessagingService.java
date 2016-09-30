@@ -98,7 +98,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(0 , notificationBuilder.build());
     }*/
 	
-	private void sendNotification(RemoteMessage.Notification notification,Sting img) {
+	private void sendNotification(RemoteMessage.Notification notification,String img) {
 
         Intent intent = new Intent(this, FCMPluginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
