@@ -63,11 +63,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if(remoteMessage.getData() != null)
         {
             try {
-                Log.d(TAG, "\tNotification Title: " + remoteMessage.getNotification().getTitle());
-                Log.d(TAG, "\tNotification Message: " + remoteMessage.getNotification().getBody());
+                Log.d(TAG, "\tNotification Data Title: " + remoteMessage.getData().get("title"));
+                Log.d(TAG, "\tNotification Data Message: " + remoteMessage.getData().get("body"));
                 title = remoteMessage.getData().get("title");
-                Body = remoteMessage.getData().get("body");;
-                image = remoteMessage.getData().get("image");;
+                Body = remoteMessage.getData().get("body");
+                image = remoteMessage.getData().get("image");
             }
             catch (Exception e)
             {
