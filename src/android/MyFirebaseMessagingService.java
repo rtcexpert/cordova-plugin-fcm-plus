@@ -24,7 +24,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FCMPlugin";
-
+	Bitmap bitmap;
     /**
      * Called when message is received.
      *
@@ -100,12 +100,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+		
+		String imageUri = notification.getData().get("image");
 
-        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        //To get a Bitmap image from the URL received
+        bitmap = getBitmapfromUrl(imageUri);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(getApplicationInfo().icon)
                 .setLargeIcon(bitmap)
                 .setContentTitle(notification.getTitle())
                 .setContentText(notification.getBody())
