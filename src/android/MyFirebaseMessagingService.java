@@ -52,9 +52,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.d(TAG, "\tNotification Message: " + remoteMessage.getNotification().getBody());
                 title = remoteMessage.getNotification().getTitle();
                 Body = remoteMessage.getNotification().getBody();
-                image = remoteMessage.getNotification().get("image");
+                //image = remoteMessage.getNotification().get("image");
             }
-            catch (exception e)
+            catch (Exception e)
             {
 
             }
@@ -69,7 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Body = remoteMessage.getData().get("body");;
                 image = remoteMessage.getData().get("image");;
             }
-            catch (exception e)
+            catch (Exception e)
             {
 
             }
