@@ -41,26 +41,52 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
         Log.d(TAG, "==> MyFirebaseMessagingService onMessageReceived");
-		
-		if( remoteMessage.getNotification() != null){
-			Log.d(TAG, "\tNotification Title: " + remoteMessage.getNotification().getTitle());
-			Log.d(TAG, "\tNotification Message: " + remoteMessage.getNotification().getBody());
-		}
-		
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("wasTapped", false);
-		//for (String key : remoteMessage.getData().keySet()) {
+
+        String title = "";
+        String Body = "";
+        String image = "";
+
+        if( remoteMessage.getNotification() != null){
+            try {
+                Log.d(TAG, "\tNotification Title: " + remoteMessage.getNotification().getTitle());
+                Log.d(TAG, "\tNotification Message: " + remoteMessage.getNotification().getBody());
+                title = remoteMessage.getNotification().getTitle();
+                Body = remoteMessage.getNotification().getBody();
+                image = remoteMessage.getNotification().get("image");
+            }
+            catch (exception e)
+            {
+
+            }
+        }
+
+        if(remoteMessage.getData() != null)
+        {
+            try {
+                Log.d(TAG, "\tNotification Title: " + remoteMessage.getNotification().getTitle());
+                Log.d(TAG, "\tNotification Message: " + remoteMessage.getNotification().getBody());
+                title = remoteMessage.getData().get("title");
+                Body = remoteMessage.getData().get("body");;
+                image = remoteMessage.getData().get("image");;
+            }
+            catch (exception e)
+            {
+
+            }
+        }
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("wasTapped", false);
+        //for (String key : remoteMessage.getData().keySet()) {
 //                 Object value = remoteMessage.getData().get("Title");
 //                 Log.d(TAG, "\tKey: " + key + " Value: " + value);
-				data.put("Title", remoteMessage.getNotification().getTitle());
-	    			data.put("Body",remoteMessage.getNotification().getBody());
-        	//}
-		
-		Log.d(TAG, "\tNotification Data: " + data.toString());
+        data.put("Title", title);
+        data.put("Body",Body);
+        //}
+
+        Log.d(TAG, "\tNotification Data: " + data.toString());
         FCMPlugin.sendPushPayload( data );
-	    final RemoteMessage.Notification remoteMessageNotification = remoteMessage.getNotification();
-	    String imageUri = remoteMessage.getData().get("image");
-        sendNotification(remoteMessageNotification,imageUri);
+        sendNotification(title,Body,image);
         //sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getData());
     }
     // [END receive_message]
@@ -98,14 +124,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(0 , notificationBuilder.build());
     }*/
 	
-	private void sendNotification(RemoteMessage.Notification notification,String img) {
+	private void sendNotification(String title,String Body,String img) {
 
         Intent intent = new Intent(this, FCMPluginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
-		
-		String imageUri = img;
+
+        String imageUri = img;
 
         //To get a Bitmap image from the URL received
         bitmap = getBitmapfromUrl(imageUri);
@@ -114,10 +140,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(getApplicationInfo().icon)
                 .setLargeIcon(bitmap)
-                .setContentTitle(notification.getTitle())
-                .setContentText(notification.getBody())
+                .setContentTitle(title)
+                .setContentText(Body)
                 .setAutoCancel(true)
-		.setStyle(new NotificationCompat.BigPictureStyle()
+                .setStyle(new NotificationCompat.BigPictureStyle()
                         .bigPicture(bitmap))/*Notification with Image*/
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
